@@ -1,0 +1,34 @@
+1.Go to ec2-->create instance (Alpha-1) and create key pair along with it.
+2.launch instance and check the status.
+3.Now create another instance( Recovery-beta-1)  and create key pair along with it.
+4.Go to Volume tab and rename the volume of instance (Alpha-1) to identify the volume.
+5.Click on instance (Alpha-1)-->Action-->Detach volume
+6.Again select instance (Alpha-1)-->Action-->Attach volume (select Recovery-beta-1).
+7.Go to Instance-->click on Recovery-beta-1 and copy the public Ip.
+8.login to (Recovery-beta-1) instance by using mobaxterm and connect with EC2 instance using ssh and their pair key.
+
+IN Mobaxterm
+----------------------------------------------------------
+* After connection switch the user as root user
+   ie:- sudo su-->enter
+* to check the hard disk
+   ie:-lsblk-->enter
+* make directory in /mnt
+   ie:- mkdir instance-volume-->enter
+* mount the device
+  ie:- mount -o nouuid /dev/xvdf1/mnt/instance-volume-->enter
+* for authorisation, here authorisation key is present to check it
+  ie:- cd /home/ec2-user/.ssh/-->enter
+  ls-->enter
+*To copy the permission for the created  directory
+  ie:- cat autorized_key >> /mnt/instance-volume/home/ec2-user/.ssh/authorized_key-->
+*Unmount the device
+  ie:-umount /mnt/instance-volume-->enter
+---------------------------------------------------------------
+9.Again go to instance-->click on (Recovery-beta-1) and stop it.
+10.Go to volume-->select (Alpha-1)-->Action-->Detach volume-->Action-->attach volume
+  *in place of instance:- select (Alpha-1)
+  *in place of device name:- /dev/xvda-->Attach volume
+11. click on (Alpha-1) and copy public ip and connect ssh by using Mobaxterm and put (Recovery-beta-1) key in the place of pair key and connect it.
+
+
